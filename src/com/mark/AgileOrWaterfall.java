@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 /**
  * Created by hl4350hb on 3/22/2017.
@@ -33,6 +34,7 @@ public class AgileOrWaterfall extends JFrame {
         recommendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                counter = 0;
                 String projectName = projectNameTextField.getText();
                 if (projectName.equals("")) {
                     resultLabel.setText("Please enter a Project Name.");
@@ -48,6 +50,17 @@ public class AgileOrWaterfall extends JFrame {
                     resultLabel.setText("Please enter a number.");
                     return;
                 }
+
+
+//                ArrayList<JCheckBox> boxes = Array.stream(rootPanel.getComponents());
+//                for (Component control : rootPanel.getComponents()) {
+//                    if (control instanceof JCheckBox) {
+//
+//                    }
+//                }
+
+
+
 //                String answer = (counter > 3) ? "Agile" : "Waterfall";
                 String answer;
                 if (counter > 3) {

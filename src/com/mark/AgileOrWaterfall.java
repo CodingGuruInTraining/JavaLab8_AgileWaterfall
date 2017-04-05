@@ -3,16 +3,16 @@ package com.mark;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 /**
- * Created by hl4350hb on 3/22/2017.
+ * This class defines the attributes and methods of a
+ * form for determining whether to use Agile or
+ * Waterfall methodology based on User inputs.
  */
 public class AgileOrWaterfall extends JFrame {
+    // Defines controls.
     private JTextField projectNameTextField;
-//    private JCheckBox programmersCheckBox;
     private JCheckBox deadlinesCheckBox;
     private JCheckBox knowledgeCheckBox;
     private JCheckBox requirementsCheckBox;
@@ -23,63 +23,65 @@ public class AgileOrWaterfall extends JFrame {
     private JPanel rootPanel;
     private JTextField programmersTextField;
 
-    private int counter = 0;
-
+    // Creates an arraylist to hold the checkboxes.
     private ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
 
     protected AgileOrWaterfall() {
+        // Sets up form.
         super("Agile or Waterfall?");
         setContentPane(rootPanel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-//        ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
+        // Adds checkboxes to list.
         boxes.add(deadlinesCheckBox);
         boxes.add(knowledgeCheckBox);
         boxes.add(requirementsCheckBox);
         boxes.add(integrationCheckBox);
         boxes.add(prototypesCheckBox);
 
+        // Adds event listener to button.
         recommendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                counter = 0;
+                int counter = 0;
+                // Checks if project name field is filled in before continuing.
                 String projectName = projectNameTextField.getText();
                 if (projectName.equals("")) {
                     resultLabel.setText("Please enter a Project Name.");
                     return;
                 }
-                String programmersText = programmersTextField.getText();
-                if (!programmersText.equals("")) {
-                    int programmers = Integer.parseInt(programmersText);
-                    if (programmers <= 15) {
-                        counter++;
+                // Exception handler for numeric input.
+                try {
+                    // Checks if programmers field is filled in before continuing.
+                    String programmersText = programmersTextField.getText();
+                    if (!programmersText.equals("")) {
+                        int programmers = Integer.parseInt(programmersText);
+                        // Checks if input is less than a made up static value.
+                        if (programmers <= 15) {
+                            counter++;
+                        }
+                    } else {
+                        resultLabel.setText("Please enter a number.");
+                        return;
                     }
-                } else {
-                    resultLabel.setText("Please enter a number.");
-                    return;
+                }
+                // Catch for entering non-numbers or decimals.
+                catch (NumberFormatException err) {
+                    System.out.println("Please only enter whole numbers.");
                 }
 
-
-//                ArrayList<JCheckBox> boxes = Array.stream(rootPanel.getComponents());
-//                for (Component control : rootPanel.getComponents()) {
-//                    if (control instanceof JCheckBox) {
-//
-//                    }
-//                }
-
-
-
+                // Loops through checkbox list and counts how many are
+                // currently selected.
                 for (JCheckBox box : boxes) {
                     if (box.isSelected()) {
                         counter++;
                     }
                 }
 
-
-
-//                String answer = (counter > 3) ? "Agile" : "Waterfall";
+                // Checks what value the counter is at and determines
+                // an answer for the User.
                 String answer;
                 if (counter > 3) {
                     answer = "Agile";
@@ -89,28 +91,10 @@ public class AgileOrWaterfall extends JFrame {
                     answer = "either one";
                 }
 
+                // Displays the entered project name along with the decided answer in a label
                 String result = projectNameTextField.getText() + " should use " + answer + " based on the provided data.";
                 resultLabel.setText(result);
             }
         });
-        ItemListener listener = new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-//                System.out.println(e);
-                JCheckBox j = (JCheckBox)e.getSource();
-                if (j.isSelected()) {
-                    counter++;
-                }
-                else if (counter != 0){
-                    counter--;
-                }
-            }
-        };
-//        programmersCheckBox.addItemListener(listener);
-        deadlinesCheckBox.addItemListener(listener);
-        knowledgeCheckBox.addItemListener(listener);
-        requirementsCheckBox.addItemListener(listener);
-        integrationCheckBox.addItemListener(listener);
-        prototypesCheckBox.addItemListener(listener);
     }
 }

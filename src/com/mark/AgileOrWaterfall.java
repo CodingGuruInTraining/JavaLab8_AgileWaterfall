@@ -25,12 +25,22 @@ public class AgileOrWaterfall extends JFrame {
 
     private int counter = 0;
 
+    private ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
+
     protected AgileOrWaterfall() {
         super("Agile or Waterfall?");
         setContentPane(rootPanel);
         pack();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
+//        ArrayList<JCheckBox> boxes = new ArrayList<JCheckBox>();
+        boxes.add(deadlinesCheckBox);
+        boxes.add(knowledgeCheckBox);
+        boxes.add(requirementsCheckBox);
+        boxes.add(integrationCheckBox);
+        boxes.add(prototypesCheckBox);
+
         recommendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +68,14 @@ public class AgileOrWaterfall extends JFrame {
 //
 //                    }
 //                }
+
+
+
+                for (JCheckBox box : boxes) {
+                    if (box.isSelected()) {
+                        counter++;
+                    }
+                }
 
 
 
